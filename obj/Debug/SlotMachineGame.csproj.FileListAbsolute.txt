@@ -1,0 +1,6 @@
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\bin\SlotMachineGame.dll.config
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\bin\SlotMachineGame.dll
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\bin\SlotMachineGame.pdb
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\obj\Debug\SlotMachineGame.csprojResolveAssemblyReference.cache
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\obj\Debug\SlotMachineGame.dll
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\Assignment 2\Slotmachine\SlotMachineGame\SlotMachineGame\obj\Debug\SlotMachineGame.pdb
