@@ -20,18 +20,16 @@ var playerBet = 0;
 var winNumber = 0;
 var lossNumber = 0;
 var spinResult;
-var fruits = "";
+var coins = "";
 var winRatio = 0;
 
 /* Tally Variables */
-var grapes = 0;
-var bananas = 0;
-var oranges = 0;
-var cherries = 0;
-var bars = 0;
-var bells = 0;
-var sevens = 0;
-var blanks = 0;
+var blue = 0;
+var red = 0;
+var copper = 0;
+var gold = 0;
+var silver = 0;
+var green = 0;
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -39,7 +37,6 @@ function init() {
     stage.enableMouseOver(20); // Enable mouse events
     createjs.Ticker.setFPS(60); // 60 frames per second
     createjs.Ticker.addEventListener("tick", gameLoop);
-
     main();
 }
 
@@ -49,39 +46,31 @@ function gameLoop() {
 
 /* Utility function to reset all fruit tallies */
 function resetFruitTally() {
-    grapes = 0;
-    bananas = 0;
-    oranges = 0;
-    cherries = 0;
-    bars = 0;
-    bells = 0;
-    sevens = 0;
-    blanks = 0;
+    blue = 0;
+    red = 0;
+    copper = 0;
+    gold = 0;
+    silver = 0;
+    green = 0;
 }
 
-// Event handlers
-/*function spinButtonOut() {
-spinButton.alpha = 1.0;
-}
-function spinButtonOver() {
-spinButton.alpha = 0.5;
-}*/
 function spinReels() {
     // Add Spin Reels code here
     spinResult = Reels();
-    fruits = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
-    console.log(fruits);
+    coins = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
+    console.log(coins);
 
     for (var tile = 0; tile < 3; tile++) {
         if (turn > 0) {
             game.removeChild(tiles[tile]);
         }
         tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
-        tiles[tile].x = 35 + (120 * tile); //59 105
+        console.log("coin name" + spinResult[tile]);
+        tiles[tile].x = 45 + (120 * tile); //59 105
         tiles[tile].y = 100; //188;
 
         game.addChild(tiles[tile]);
-        console.log(game.getNumChildren());
+        //console.log(game.getNumChildren());
     }
 }
 
@@ -94,8 +83,7 @@ function checkRange(value, lowerBounds, upperBounds) {
     }
 }
 
-/* When this function is called it determines the betLine results.
-e.g. Bar - Orange - Banana */
+/* When this function is called it determines the betLine results. */
 function Reels() {
     var betLine = [" ", " ", " "];
     var outCome = [0, 0, 0];
@@ -104,36 +92,28 @@ function Reels() {
         outCome[spin] = Math.floor((Math.random() * 65) + 1);
         switch (outCome[spin]) {
             case checkRange(outCome[spin], 1, 27):
-                betLine[spin] = "blank";
-                blanks++;
+                betLine[spin] = "green";
+                green++;
                 break;
             case checkRange(outCome[spin], 28, 37):
-                betLine[spin] = "grapes";
-                grapes++;
+                betLine[spin] = "blue";
+                blue++;
                 break;
             case checkRange(outCome[spin], 38, 46):
-                betLine[spin] = "banana";
-                bananas++;
+                betLine[spin] = "red";
+                red++;
                 break;
             case checkRange(outCome[spin], 47, 54):
-                betLine[spin] = "orange";
-                oranges++;
+                betLine[spin] = "copper";
+                copper++;
                 break;
             case checkRange(outCome[spin], 55, 59):
-                betLine[spin] = "cherry";
-                cherries++;
+                betLine[spin] = "gold";
+                gold++;
                 break;
-            case checkRange(outCome[spin], 60, 62):
-                betLine[spin] = "bar";
-                bars++;
-                break;
-            case checkRange(outCome[spin], 63, 64):
-                betLine[spin] = "bell";
-                bells++;
-                break;
-            case checkRange(outCome[spin], 65, 65):
-                betLine[spin] = "seven";
-                sevens++;
+            case checkRange(outCome[spin], 60, 65):
+                betLine[spin] = "silver";
+                silver++;
                 break;
         }
     }
@@ -142,41 +122,29 @@ function Reels() {
 
 /* This function calculates the player's winnings, if any */
 function determineWinnings() {
-    if (blanks == 0) {
-        if (grapes == 3) {
+    if (green == 0) {
+        if (blue == 3) {
             winnings = playerBet * 10;
-        } else if (bananas == 3) {
+        } else if (red == 3) {
             winnings = playerBet * 20;
-        } else if (oranges == 3) {
+        } else if (copper == 3) {
             winnings = playerBet * 30;
-        } else if (cherries == 3) {
+        } else if (gold == 3) {
             winnings = playerBet * 40;
-        } else if (bars == 3) {
+        } else if (silver == 3) {
             winnings = playerBet * 50;
-        } else if (bells == 3) {
-            winnings = playerBet * 75;
-        } else if (sevens == 3) {
-            winnings = playerBet * 100;
-        } else if (grapes == 2) {
+        } else if (blue == 2) {
             winnings = playerBet * 2;
-        } else if (bananas == 2) {
+        } else if (red == 2) {
             winnings = playerBet * 2;
-        } else if (oranges == 2) {
+        } else if (copper == 2) {
             winnings = playerBet * 3;
-        } else if (cherries == 2) {
+        } else if (gold == 2) {
             winnings = playerBet * 4;
-        } else if (bars == 2) {
+        } else if (silver == 2) {
             winnings = playerBet * 5;
-        } else if (bells == 2) {
-            winnings = playerBet * 10;
-        } else if (sevens == 2) {
-            winnings = playerBet * 20;
         } else {
             winnings = playerBet * 1;
-        }
-
-        if (sevens == 1) {
-            winnings = playerBet * 5;
         }
         winNumber++;
         // showWinMessage();
