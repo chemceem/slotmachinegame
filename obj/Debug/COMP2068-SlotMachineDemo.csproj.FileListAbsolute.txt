@@ -1,0 +1,6 @@
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\bin\COMP2068-CreateJSBoilerPlate.dll.config
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\bin\COMP2068-CreateJSBoilerPlate.dll
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\bin\COMP2068-CreateJSBoilerPlate.pdb
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\obj\Debug\COMP2068-CreateJSBoilerPlate.dll
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\obj\Debug\COMP2068-CreateJSBoilerPlate.pdb
+C:\Users\Chemcee. M. C\Documents\Semester 4\Web Game\COMP2068-SlotMachineDemo-master\COMP2068-SlotMachineDemo\obj\Debug\COMP2068-SlotMachineDemo.csprojResolveAssemblyReference.cache

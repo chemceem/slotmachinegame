@@ -1,7 +1,7 @@
 ﻿module objects {
 export class Button {
 
-    // PRIVATE INSTANCE VARIABLES +++++++++++++++++++++++++++++++++++++++++++++++++
+    // PRIVATE INSTANCE VARIABLES 
     private _buttonImage: createjs.Bitmap;
     private _x: number;
     private _y: number;
@@ -52,6 +52,3 @@ export class Button {
 } 
 
 }
-
-
-

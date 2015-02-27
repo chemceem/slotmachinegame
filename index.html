@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SLOT MACHINE GAME</title>
 
-    <!-- CSS Section -->
+    <!-- CSS file -->
     <link href="css/game.css" rel="stylesheet" />
 </head>
 <body onload="init();">
-    <!-- Canvas where the Game will Happen-->
-    <canvas id="canvas" width="450" height="450"></canvas>
-    <!-- JavaScript -->
+    <!-- Canvas in which the slot machine is located-->
+    <div>
+        <p id="companyname">TRQ Games</p>
+        <canvas id="canvas" width="450" height="450"></canvas>
+    </div>
+    
+
+    <!-- JavaScript files-->
     <script src="Scripts/lib/easeljs-0.8.0.min.js"></script>
     <script src="Scripts/lib/tweenjs-0.6.0.min.js"></script>
     <script src="Scripts/lib/soundjs-0.6.0.min.js"></script>
     <script src="Scripts/lib/preloadjs-0.6.0.min.js"></script>
-    <!-- GAME SCRIPTS -->
+
+    <!-- scripts for various buttons -->
     <script src="Scripts/objects/Button.js"></script>
 
+    <!-- The script that executes the game-->
     <script src="Scripts/game.js"></script>
 </body>
 </html>

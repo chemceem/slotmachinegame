@@ -9,6 +9,7 @@ var game: createjs.Container;
 var background: createjs.Bitmap;
 var spinButton: objects.Button;
 var resetButton: objects.Button;
+var quitButton: objects.Button;
 var tiles: createjs.Bitmap[] = [];
 var tileContainers: createjs.Container[] = [];
 
@@ -91,8 +92,8 @@ function spinReels() {
             game.removeChild(tiles[tile]);
         }
         tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
-        tiles[tile].x = 59 + (105 * tile);
-        tiles[tile].y = 188;
+        tiles[tile].x = 35 + (120 * tile);      //59 105
+        tiles[tile].y = 100;//188;
         
         game.addChild(tiles[tile]);
         console.log(game.getNumChildren());
@@ -220,39 +221,39 @@ function determineWinnings() {
 
 }
 
-function createUI():void {
+function loadSlotMachine():void {
     // instantiate my background
     background = new createjs.Bitmap("assets/images/slotmachine.png");
     game.addChild(background);
 
     // Spin Button
-    spinButton = new objects.Button("assets/images/spinButton.png", 323, 376);
+    spinButton = new objects.Button("assets/images/spinButton.png", 323, 380);
     game.addChild(spinButton.getImage());
-
     spinButton.getImage().addEventListener("click", spinReels);
 
 
     // Reset Button
     resetButton = new objects.Button("assets/images/resetButton.png", 38, 380);
     game.addChild(resetButton.getImage());
-
     resetButton.getImage().addEventListener("click", function () {
         console.log("reset clicked");
     });
+
+    // Quit Button
+    quitButton = new objects.Button("assets/images/quitButton.png", 185, 380);
+    game.addChild(quitButton.getImage());
+    quitButton.getImage().addEventListener("click", function () {
+        console.log(" quit clicked");
+    });
 }
 
-
-
-// Our Game Kicks off in here
+//the game execution begins here
 function main() {
     // instantiate my game container
     game = new createjs.Container();
     game.x = 23;
     game.y = 6;
 
-    // Create Slotmachine User Interface
-    createUI();
-
-
+    loadSlotMachine();  //this methods creates the UI for slot machine
     stage.addChild(game);
 }
