@@ -13,6 +13,11 @@ var tileContainers = [];
 
 // Game Variables
 var playerMoney = 1000;
+var playerMoneyDisplay;
+var playermoney2;
+playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+playerMoneyDisplay.x = 75;
+playerMoneyDisplay.y = 290;
 var winnings = 0;
 var jackpot = 5000;
 var turn = 0;
@@ -56,22 +61,24 @@ function resetFruitTally() {
 
 function spinReels() {
     // Add Spin Reels code here
+    game.removeChild(playerMoneyDisplay);
+    game.removeChild(playermoney2);
     spinResult = Reels();
     coins = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
     console.log(coins);
-
     for (var tile = 0; tile < 3; tile++) {
-        if (turn > 0) {
-            game.removeChild(tiles[tile]);
-        }
+        playerMoney--;
+        console.log('playermoney :' + playerMoney);
+        game.removeChild(tiles[tile]);
         tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
-        console.log("coin name" + spinResult[tile]);
-        tiles[tile].x = 45 + (120 * tile); //59 105
-        tiles[tile].y = 100; //188;
-
+        tiles[tile].x = 55 + (120 * tile);
+        tiles[tile].y = 120;
         game.addChild(tiles[tile]);
-        //console.log(game.getNumChildren());
     }
+    playermoney2 = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+    playermoney2.x = 75;
+    playermoney2.y = 290;
+    game.addChild(playermoney2);
 }
 
 /* Utility function to check if a value falls within a range of bounds */
@@ -89,31 +96,32 @@ function Reels() {
     var outCome = [0, 0, 0];
 
     for (var spin = 0; spin < 3; spin++) {
-        outCome[spin] = Math.floor((Math.random() * 65) + 1);
+        outCome[spin] = Math.floor((Math.random() * 72) + 1);
         switch (outCome[spin]) {
-            case checkRange(outCome[spin], 1, 27):
+            case checkRange(outCome[spin], 1, 12):
                 betLine[spin] = "green";
                 green++;
                 break;
-            case checkRange(outCome[spin], 28, 37):
+            case checkRange(outCome[spin], 13, 25):
                 betLine[spin] = "blue";
                 blue++;
                 break;
-            case checkRange(outCome[spin], 38, 46):
+            case checkRange(outCome[spin], 26, 38):
                 betLine[spin] = "red";
                 red++;
                 break;
-            case checkRange(outCome[spin], 47, 54):
+            case checkRange(outCome[spin], 39, 50):
                 betLine[spin] = "copper";
                 copper++;
                 break;
-            case checkRange(outCome[spin], 55, 59):
-                betLine[spin] = "gold";
-                gold++;
-                break;
-            case checkRange(outCome[spin], 60, 65):
+
+            case checkRange(outCome[spin], 51, 64):
                 betLine[spin] = "silver";
                 silver++;
+                break;
+            case checkRange(outCome[spin], 65, 72):
+                betLine[spin] = "gold";
+                gold++;
                 break;
         }
     }
@@ -159,6 +167,8 @@ function loadSlotMachine() {
     background = new createjs.Bitmap("assets/images/slotmachine.png");
     game.addChild(background);
 
+    game.addChild(playerMoneyDisplay);
+
     // Spin Button
     spinButton = new objects.Button("assets/images/spinButton.png", 323, 380);
     game.addChild(spinButton.getImage());
@@ -185,7 +195,6 @@ function main() {
     game = new createjs.Container();
     game.x = 23;
     game.y = 6;
-
     loadSlotMachine(); //this methods creates the UI for slot machine
     stage.addChild(game);
 }
