@@ -22,7 +22,7 @@ export class Button {
 
         return this._buttonImage;
     }
-
+    
     public getX(): number {
         return this._x;
     }

@@ -14,21 +14,15 @@ var tileContainers: createjs.Container[] = [];
 
 // Game Variables
 var playerMoney = 1000; //initial money assigned to the player
-var playerMoneyDisplay;
-var playermoney2;
-playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
-playerMoneyDisplay.x = 75;
-playerMoneyDisplay.y = 290;
+var playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+
 var winnings = 0;       //player winnings
+var winningsDisplay = new createjs.Text(winnings.toString(), "35px play", "#ff0000");
 var jackpot = 5000;
-var turn = 0;
-var playerBet = 0;      //bet placed by the player
 var winNumber = 0;
 var lossNumber = 0;
 var spinResult;
 var coins = "";
-var winRatio = 0;
-
 
 /* Tally Variables */
 var blue = 0;
@@ -51,7 +45,18 @@ function gameLoop() {
     stage.update(); // Refreshes our stage
 }
 
-
+//function to reset the game
+function reset() {
+    var r = confirm(" Are you sure you want to reset ? ");
+    if (r == true) {
+        playerMoney = 1000;
+        winnings = 0;
+        playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+        winningsDisplay = new createjs.Text(winnings.toString(), "35px play", "#ff0000");
+        resetFruitTally();
+        loadSlotMachine();
+    }
+}
 /* Utility function to reset all fruit tallies */
 function resetFruitTally() {
     blue = 0;
@@ -64,26 +69,39 @@ function resetFruitTally() {
 
 
 function spinReels() {
-    // Add Spin Reels code here
-    game.removeChild(playerMoneyDisplay);
-    game.removeChild(playermoney2);
-    spinResult = Reels();
-    coins = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
-    console.log(coins);
-    for (var tile = 0; tile < 3; tile++) {
-        playerMoney--;
-        console.log('playermoney :' + playerMoney);
-        game.removeChild(tiles[tile]);
-        tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
-        tiles[tile].x = 55 + (120 * tile);      
-        tiles[tile].y = 120;
-        game.addChild(tiles[tile]);
-    }
-    playermoney2 = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
-    playermoney2.x = 75;
-    playermoney2.y = 290;
-    game.addChild(playermoney2);
+    if (playerMoney >= 20) {
 
+        // Add Spin Reels code here
+        resetFruitTally();
+        game.removeChild(playerMoneyDisplay);
+        game.removeChild(winningsDisplay);
+        playerMoney = playerMoney - 20;
+        spinResult = Reels();
+        coins = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
+        determineWinnings();
+        playerMoney = playerMoney + winnings;
+        for (var tile = 0; tile < 3; tile++) {
+            console.log('playermoney :' + winnings);
+            game.removeChild(tiles[tile]);
+            tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
+            tiles[tile].x = 55 + (130 * tile);
+            tiles[tile].y = 120;
+            game.addChild(tiles[tile]);
+        }
+        playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+        playerMoneyDisplay.x = 75;
+        playerMoneyDisplay.y = 290;
+        game.addChild(playerMoneyDisplay);
+
+        winningsDisplay = new createjs.Text(winnings.toString(), "35px play", "#ff0000");
+        winningsDisplay.x = 325;
+        winningsDisplay.y = 290;
+        game.addChild(winningsDisplay);
+    }
+    else {
+       // spinButton.mouseEnabled  = false;
+        alert(" You have insufficient credits to play. Please restart the game.");
+    }
 }
 
 /* Utility function to check if a value falls within a range of bounds */
@@ -102,30 +120,30 @@ function Reels() {
     var outCome = [0, 0, 0];
 
     for (var spin = 0; spin < 3; spin++) {
-        outCome[spin] = Math.floor((Math.random() * 72) + 1);
+        outCome[spin] = Math.floor((Math.random() * 70) + 1);
         switch (outCome[spin]) {
-            case checkRange(outCome[spin], 1, 12): 
+            case checkRange(outCome[spin], 1, 17): 
                 betLine[spin] = "green";
                 green++;
                 break;
-            case checkRange(outCome[spin], 13, 25): 
+            case checkRange(outCome[spin], 18, 32): 
                 betLine[spin] = "blue";
                 blue++;
                 break;
-            case checkRange(outCome[spin], 26, 38):
+            case checkRange(outCome[spin], 33, 43):
                 betLine[spin] = "red";
                 red++;
                 break;
-            case checkRange(outCome[spin], 39, 50): 
+            case checkRange(outCome[spin], 44,52 ): 
                 betLine[spin] = "copper";
                 copper++;
                 break;
             
-            case checkRange(outCome[spin], 51, 64): 
+            case checkRange(outCome[spin], 53, 62): 
                 betLine[spin] = "silver";
                 silver++;
                 break;
-            case checkRange(outCome[spin], 65, 72):
+            case checkRange(outCome[spin], 63, 70):
                 betLine[spin] = "gold";
                 gold++;
                 break;
@@ -137,48 +155,56 @@ function Reels() {
 
 /* This function calculates the player's winnings, if any */
 function determineWinnings() {
-    if (green == 0) {
-        if (blue == 3) {
-            winnings = playerBet * 10;
+    winnings = 0;
+        if (gold == 3) {
+            winnings = 10 * 30;
+            gold = 0;
         }
-        else if (red == 3) {
-            winnings = playerBet * 20;
-        }
-        else if (copper == 3) {
-            winnings = playerBet * 30;
-        }
-        else if (gold == 3) {
-            winnings = playerBet * 40;
-        }
-        else if (silver == 3) {
-            winnings = playerBet * 50;
-        }
-        else if (blue == 2) {
-            winnings = playerBet * 2;
-        }
-        else if (red == 2) {
-            winnings = playerBet * 2;
-        }
-        else if (copper == 2) {
-            winnings = playerBet * 3;
+        else if (gold == 2 && silver == 1) {
+            winnings = 10 * 17;
+            gold = 0;
+            silver = 0;
         }
         else if (gold == 2) {
-            winnings = playerBet * 4;
+            winnings = 10 * 15;
+            gold = 0;
+        }
+        else if (gold == 1 && silver == 2) {
+            winnings = 10 * 12;
+            gold = 0;
+            silver = 0;
+        }
+        else if (silver == 3) {
+            winnings = 10 * 10;
+            silver = 0;
         }
         else if (silver == 2) {
-            winnings = playerBet * 5;
+            winnings = 10 * 8;
+            silver = 0;
         }
-        else {
-            winnings = playerBet * 1;
+        else if (copper == 3) {
+            winnings = 10 * 7;
+            copper = 0;
         }
-        winNumber++;
-       // showWinMessage();
-    }
+        else if (red == 3) {
+            winnings = 10 * 5;
+            red = 0;
+        }
+        else if (blue == 3) {
+            winnings = 10 * 3;
+            blue = 0;
+        }
+        else if (green == 3) {
+            console.log(" in here");
+            winnings = 10 * 2;
+            green = 0;
+        }
     else {
+        winnings = 0;
         lossNumber++;
-      //  showLossMessage();
     }
-
+    console.log("winnings in round : " + winnings);
+    winNumber++;
 }
 
 function loadSlotMachine():void {
@@ -187,7 +213,14 @@ function loadSlotMachine():void {
     background = new createjs.Bitmap("assets/images/slotmachine.png");
     game.addChild(background);
 
+    playerMoneyDisplay.x = 75;
+    playerMoneyDisplay.y = 290;
     game.addChild(playerMoneyDisplay);
+
+    winningsDisplay.x = 330;
+    winningsDisplay.y = 290;
+    game.addChild(winningsDisplay);
+
     // Spin Button
     spinButton = new objects.Button("assets/images/spinButton.png", 323, 380);
     game.addChild(spinButton.getImage());
@@ -195,14 +228,12 @@ function loadSlotMachine():void {
 
 
     // Reset Button
-    resetButton = new objects.Button("assets/images/resetButton.png", 38, 380);
+    resetButton = new objects.Button("assets/images/resetButton.png", 70, 380);
     game.addChild(resetButton.getImage());
-    resetButton.getImage().addEventListener("click", function () {
-        console.log("reset clicked");
-    });
+    resetButton.getImage().addEventListener("click", reset);
 
     // Quit Button
-    quitButton = new objects.Button("assets/images/quitButton.png", 185, 380);
+    quitButton = new objects.Button("assets/images/quitButton.png", 200, 380);
     game.addChild(quitButton.getImage());
     quitButton.getImage().addEventListener("click", function () {
         console.log(" quit clicked");
