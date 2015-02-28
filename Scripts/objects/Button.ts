@@ -1,12 +1,13 @@
 ﻿module objects {
 export class Button {
 
-    // PRIVATE INSTANCE VARIABLES 
+    // Instance variables for the Button Class
     private _buttonImage: createjs.Bitmap;
     private _x: number;
     private _y: number;
 
     constructor(path: string, x: number, y: number) {
+        //To set the location of the button within the canvas
         this.setX(x);
         this.setY(y);
 
@@ -17,7 +18,7 @@ export class Button {
         this._buttonImage.addEventListener("mouseout", this._buttonOut);
     }
 
-    // PUBLIC PROPERTIES
+    // Properties to access the buttons from game.ts file
     public getImage(): createjs.Bitmap {
 
         return this._buttonImage;
@@ -39,8 +40,7 @@ export class Button {
         this._y = y;
     }
 
-    // EVENT HANDLERS
-
+    //Event Handlers for fading the button when the mouse enters and leaves
     private _buttonOut(event: createjs.MouseEvent): void {
         event.currentTarget.alpha = 1.0;
     }

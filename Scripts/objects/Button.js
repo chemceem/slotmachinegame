@@ -2,6 +2,7 @@
 (function (objects) {
     var Button = (function () {
         function Button(path, x, y) {
+            //To set the location of the button within the canvas
             this.setX(x);
             this.setY(y);
 
@@ -11,7 +12,7 @@
             this._buttonImage.addEventListener("mouseover", this._buttonOver);
             this._buttonImage.addEventListener("mouseout", this._buttonOut);
         }
-        // PUBLIC PROPERTIES
+        // Properties to access the buttons from game.ts file
         Button.prototype.getImage = function () {
             return this._buttonImage;
         };
@@ -32,7 +33,7 @@
             this._y = y;
         };
 
-        // EVENT HANDLERS
+        //Event Handlers for fading the button when the mouse enters and leaves
         Button.prototype._buttonOut = function (event) {
             event.currentTarget.alpha = 1.0;
         };
