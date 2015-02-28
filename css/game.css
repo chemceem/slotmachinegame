@@ -1,8 +1,7 @@
 ﻿#canvas{
-    border: solid 3px black;
     position:absolute;
     top:50%;  
-    left:47%;  
+    left:40%;  
     margin:-10% 0 0 -10%;  
 }
 body{
@@ -14,4 +13,20 @@ body{
     top:30%;  
     left:50%;  
     margin:-10% 0 0 -10%;
+}
+#logo{
+    height:15%;
+    width:18%;
+    position:relative;
+    margin-left: 41%;
+    margin-top: 3%;
+}
+
+#rules{
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 26px;
+    color: white;
+    position:relative;
+    top:30%;  
+    left:60%;  
 }

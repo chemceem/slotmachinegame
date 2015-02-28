@@ -57,6 +57,20 @@ function reset() {
     }
 }
 
+//function to quit the game
+function quit() {
+    var q = confirm(" Are you sure you want to quit ? ");
+    if (q == true) {
+        alert(" You total winnings : " + playerMoney);
+        playerMoney = 1000;
+        winnings = 0;
+        playerMoneyDisplay = new createjs.Text(playerMoney.toString(), "35px play", "#ff0000 ");
+        winningsDisplay = new createjs.Text(winnings.toString(), "35px play", "#ff0000");
+        resetFruitTally();
+        loadSlotMachine();
+    }
+}
+
 /* Utility function to reset all fruit tallies */
 function resetFruitTally() {
     blue = 0;
@@ -67,8 +81,21 @@ function resetFruitTally() {
     green = 0;
 }
 
+function playSound(event) {
+    console.log(" in here sound");
+    var soundInstance = createjs.Sound.play("slot");
+    soundInstance.on("complete", resetAudio);
+}
+
+function resetAudio() {
+    createjs.Sound.removeSound("assets/Sounds/slotsound.mp3", "");
+}
+
 function spinReels() {
     if (playerMoney >= 20) {
+        createjs.Sound.registerSound({ id: "slot", src: "assets/Sounds/slotsound.mp3" });
+        createjs.Sound.addEventListener("fileload", playSound);
+
         // Add Spin Reels code here
         resetFruitTally();
         game.removeChild(playerMoneyDisplay);
@@ -152,7 +179,7 @@ function Reels() {
 function determineWinnings() {
     winnings = 0;
     if (gold == 3) {
-        winnings = 10 * 30;
+        winnings = 10 * 20;
         gold = 0;
     } else if (gold == 2 && silver == 1) {
         winnings = 10 * 17;
@@ -218,9 +245,7 @@ function loadSlotMachine() {
     // Quit Button
     quitButton = new objects.Button("assets/images/quitButton.png", 200, 380);
     game.addChild(quitButton.getImage());
-    quitButton.getImage().addEventListener("click", function () {
-        console.log(" quit clicked");
-    });
+    quitButton.getImage().addEventListener("click", quit);
 }
 
 //the game execution begins here
